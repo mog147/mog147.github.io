@@ -318,7 +318,9 @@ section {
     /* 絶対的な余白を保証 */
 }
 
-.intro-section .glass-card {
+.intro-section .glass-card,
+.about-profile-section .glass-card,
+.about-career-section .glass-card {
     background: transparent;
     border: none;
     box-shadow: none;
