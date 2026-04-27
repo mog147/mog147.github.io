@@ -56,9 +56,40 @@
         <section class="container">
             <section-title title="CONTACT" center reveal></section-title>
 
-            <contact-examples></contact-examples>
+            <div class="needs-grid reveal">
+                <a href="#contact-form" class="needs-card">
+                    <div class="needs-card__icon"><i class="fa-regular fa-comments"></i></div>
+                    <p class="needs-card__problem">制作の相談・<br>フィードバック</p>
+                    <ul class="needs-card__points">
+                        <li>進行中のプロジェクトについて話したい</li>
+                        <li>デザインや実装の考え方を聞きたい</li>
+                        <li>ポートフォリオへの感想・意見を伝えたい</li>
+                    </ul>
+                    <span class="needs-card__cta">相談する <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="#contact-form" class="needs-card">
+                    <div class="needs-card__icon"><i class="fa-solid fa-handshake"></i></div>
+                    <p class="needs-card__problem">コラボレーション・<br>協業の提案</p>
+                    <ul class="needs-card__points">
+                        <li>デザイン × エンジニアリングで協力したい</li>
+                        <li>お互いの得意領域を活かした共同制作</li>
+                        <li>案件の一部を一緒に担当したい</li>
+                    </ul>
+                    <span class="needs-card__cta">提案する <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+                <a href="#contact-form" class="needs-card">
+                    <div class="needs-card__icon"><i class="fa-solid fa-pen-nib"></i></div>
+                    <p class="needs-card__problem">取材・インタビュー・<br>執筆依頼</p>
+                    <ul class="needs-card__points">
+                        <li>制作プロセスや技術について聞きたい</li>
+                        <li>記事・SNS・メディアでの紹介</li>
+                        <li>イベント・登壇のオファー</li>
+                    </ul>
+                    <span class="needs-card__cta">連絡する <i class="fa-solid fa-arrow-right"></i></span>
+                </a>
+            </div>
 
-            <glass-card reveal class="contact-card-wrap">
+            <glass-card reveal class="contact-card-wrap" id="contact-form-wrap">
                 <form id="contact-form"
                     action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfYEsQyqY1EzHRB7w8vg46BP_26vIJuk0lQjoJ_G1KD4qYslw/formResponse"
                     method="POST">
