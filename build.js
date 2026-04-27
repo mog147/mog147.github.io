@@ -32,57 +32,63 @@ if (fs.existsSync(FONT_PATHS[1])) {
 /**
  * Generate OGP image for a blog article
  */
-function generateOgImage(slug, title, dateFormatted, category) {
+function generateOgImage(slug, title, dateFormatted, category, stat) {
     const WIDTH = 1200;
     const HEIGHT = 630;
     const canvas = createCanvas(WIDTH, HEIGHT);
     const ctx = canvas.getContext('2d');
 
-    // Background gradient (indigo → purple, matching --grad-main)
-    const grad = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT);
-    grad.addColorStop(0, '#6366F1');
-    grad.addColorStop(1, '#A855F7');
-    ctx.fillStyle = grad;
+    // Dark background matching site
+    ctx.fillStyle = '#0B0E14';
     ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-    // Subtle overlay pattern - decorative circles
-    ctx.globalAlpha = 0.08;
-    ctx.fillStyle = '#FFFFFF';
-    ctx.beginPath();
-    ctx.arc(WIDTH * 0.85, HEIGHT * 0.2, 200, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(WIDTH * 0.1, HEIGHT * 0.8, 150, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1.0;
+    // Stat watermark — huge, faded, behind everything
+    if (stat) {
+        const statFontSize = Math.min(220, Math.floor(1600 / stat.length));
+        ctx.font = `300 ${statFontSize}px "${fontFamily}", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.globalAlpha = 0.05;
+        ctx.fillText(stat, WIDTH / 2, HEIGHT / 2);
+        ctx.globalAlpha = 1.0;
+    }
 
-    // Logo text (top-left)
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-    ctx.font = `300 28px "${fontFamily}", sans-serif`;
-    ctx.fillText('396 FOLIO', 60, 70);
+    // Thin indigo border frame
+    ctx.strokeStyle = 'rgba(99, 102, 241, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(48, 48, WIDTH - 96, HEIGHT - 96);
 
-    // Title text (centered, white, large)
+    // Logo (top-left inside frame)
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.font = `300 22px "${fontFamily}", sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('396 FOLIO', 72, 72);
+
+    // Title (centered, thin weight)
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = `bold 48px "${fontFamily}", sans-serif`;
+    ctx.font = `300 50px "${fontFamily}", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Word-wrap title
-    const maxWidth = WIDTH - 160;
+    const maxWidth = WIDTH - 200;
     const lines = wrapText(ctx, title, maxWidth);
-    const lineHeight = 66;
+    const lineHeight = 70;
     const totalHeight = lines.length * lineHeight;
-    const startY = (HEIGHT / 2) - (totalHeight / 2) + 10;
+    const startY = (HEIGHT / 2) - (totalHeight / 2) + (stat ? 0 : 10);
 
     lines.forEach((line, i) => {
         ctx.fillText(line, WIDTH / 2, startY + i * lineHeight);
     });
 
-    // Date & Category (bottom)
-    ctx.font = `300 24px "${fontFamily}", sans-serif`;
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    const bottomText = category ? `${dateFormatted}  |  ${category}` : dateFormatted;
-    ctx.fillText(bottomText, WIDTH / 2, HEIGHT - 60);
+    // Category (bottom-center, indigo)
+    ctx.font = `300 18px "${fontFamily}", sans-serif`;
+    ctx.fillStyle = 'rgba(99, 102, 241, 0.8)';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    const bottomText = category ? `${category.toUpperCase()}  ·  ${dateFormatted}` : dateFormatted;
+    ctx.fillText(bottomText, WIDTH / 2, HEIGHT - 68);
 
     // Save PNG
     fs.mkdirSync(OG_OUTPUT_DIR, { recursive: true });
@@ -190,7 +196,7 @@ for (const file of mdFiles) {
     if (fm.image) {
         ogImage = `${SITE_URL}/${fm.image}`;
     } else {
-        ogImage = generateOgImage(slug, fm.title, dateFormatted, fm.category || '');
+        ogImage = generateOgImage(slug, fm.title, dateFormatted, fm.category || '', fm.stat || '');
     }
 
     // Fill template
