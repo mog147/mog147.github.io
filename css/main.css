@@ -327,6 +327,13 @@ section {
     border-radius: 0;
 }
 
+.about-profile-section .intro-achievements {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
 /* --- Brand Typography --- */
 h1,
 h2,
