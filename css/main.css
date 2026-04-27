@@ -318,6 +318,13 @@ section {
     /* 絶対的な余白を保証 */
 }
 
+.intro-section .glass-card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
 /* --- Brand Typography --- */
 h1,
 h2,
@@ -2921,12 +2928,12 @@ iframe[id^="twitter-widget-"] {
 }
 
 .intro-lead {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 2;
     margin-bottom: 3rem;
     color: var(--color-indigo);
     font-weight: 400;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
 }
 
 .intro-achievements {
