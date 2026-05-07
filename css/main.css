@@ -302,6 +302,50 @@ section {
     text-transform: uppercase;
 }
 
+.hero-cta {
+    margin-top: 2.5rem;
+}
+
+.hero-cta .btn-cta,
+.hero-cta .btn-more {
+    margin: 0;
+    padding: 0.7rem 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 2rem;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.hero-cta .btn-cta {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.hero-cta .btn-cta::after {
+    display: none;
+}
+
+.hero-cta .btn-more {
+    background: transparent;
+}
+
+.hero-cta .btn-cta:hover,
+.hero-cta .btn-more:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: white;
+    transform: none;
+    opacity: 1;
+}
+
+.hero-cta .btn-more .btn-icon {
+    display: none;
+}
+
 .hero-tagline {
     font-family: "Outfit", sans-serif;
     color: var(--color-text-sub);
@@ -2913,6 +2957,13 @@ iframe[id^="twitter-widget-"] {
 
 .intro-text {
     max-width: 650px;
+}
+
+.intro-target {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-indigo);
+    letter-spacing: 0.05em;
 }
 
 /* Introduction pillars */
