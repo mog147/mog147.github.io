@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node node_modules/typescript/lib/tsc.js && cp src/ui.html ui.html"
   },
   "keywords": [],
   "author": "",

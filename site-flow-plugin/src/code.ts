@@ -315,11 +315,107 @@ figma.ui.onmessage = async (msg) => {
       figma.currentPage.selection = [node as SceneNode];
     }
   }
+
+  if (msg.type === "link-canvas-node") {
+    const sel = figma.currentPage.selection;
+    if (!sel.length) return;
+    sel[0].setPluginData("linkedDesignId", msg.targetId as string);
+    const linked = await figma.getNodeByIdAsync(msg.targetId as string);
+    figma.notify(`"${linked?.name ?? msg.targetId}" をリンクしました ✓`);
+    await pushCanvasSelection();
+    return;
+  }
+
+  if (msg.type === "unlink-canvas-node") {
+    const sel = figma.currentPage.selection;
+    if (!sel.length) return;
+    sel[0].setPluginData("linkedDesignId", "");
+    sel[0].setPluginData("originFrameId", "");
+    figma.notify("リンクを解除しました");
+    await pushCanvasSelection();
+    return;
+  }
+
+  if (msg.type === "get-thumbnail") {
+    const node = await figma.getNodeByIdAsync(msg.nodeId);
+    if (!node || !("exportAsync" in node)) {
+      figma.ui.postMessage({ type: "thumbnail-result", nodeId: msg.nodeId, bytes: null });
+      return;
+    }
+    try {
+      const bytes = await (node as SceneNode & {
+        exportAsync: (o: object) => Promise<Uint8Array>;
+      }).exportAsync({ format: "PNG", constraint: { type: "WIDTH", value: 480 } });
+      figma.ui.postMessage({ type: "thumbnail-result", nodeId: msg.nodeId, bytes: Array.from(bytes) });
+    } catch {
+      figma.ui.postMessage({ type: "thumbnail-result", nodeId: msg.nodeId, bytes: null });
+    }
+  }
 };
+
+// ── Selection change → show canvas node preview ──────────────────────────
+async function pushCanvasSelection() {
+  const sel = figma.currentPage.selection;
+  if (sel.length === 0) {
+    figma.ui.postMessage({ type: "canvas-selection", selNodeId: null });
+    return;
+  }
+  const node = sel[0];
+  const originId = node.getPluginData("originFrameId") || null;
+  const linkedId = node.getPluginData("linkedDesignId") || null;
+  const targetId = originId || linkedId;
+
+  // Always report the selected node so UI can offer linking
+  if (!targetId) {
+    figma.ui.postMessage({
+      type: "canvas-selection",
+      selNodeId: node.id,
+      selNodeName: node.name,
+      linkedId: null,
+      bytes: null,
+    });
+    return;
+  }
+
+  const target = await figma.getNodeByIdAsync(targetId);
+  if (!target) {
+    node.setPluginData("linkedDesignId", "");
+    figma.ui.postMessage({
+      type: "canvas-selection",
+      selNodeId: node.id,
+      selNodeName: node.name,
+      linkedId: null,
+      bytes: null,
+    });
+    return;
+  }
+
+  let bytes: number[] | null = null;
+  if ("exportAsync" in target) {
+    try {
+      const raw = await (target as SceneNode & {
+        exportAsync: (o: object) => Promise<Uint8Array>;
+      }).exportAsync({ format: "PNG", constraint: { type: "WIDTH", value: 600 } });
+      bytes = Array.from(raw);
+    } catch { /* skip */ }
+  }
+
+  figma.ui.postMessage({
+    type: "canvas-selection",
+    selNodeId: node.id,
+    selNodeName: node.name,
+    linkedId: targetId,
+    linkedName: target.name,
+    bytes,
+  });
+}
+
+figma.on("selectionchange", () => { pushCanvasSelection(); });
 
 (async () => {
   const frames = scanFrames();
   const tree = loadTree();
   const collapsed = loadCollapsed();
   figma.ui.postMessage({ type: "scan-result", frames, tree, collapsed });
+  await pushCanvasSelection();
 })();

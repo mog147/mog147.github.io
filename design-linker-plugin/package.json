@@ -1,0 +1,12 @@
+{
+  "name": "design-linker-plugin",
+  "version": "1.0.0",
+  "description": "Link any Figma object to a design frame and preview it on click",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.126.0",
+    "typescript": "^5.4.5"
+  }
+}

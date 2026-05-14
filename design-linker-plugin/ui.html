@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --surface2: #0f172a;
+    --accent: #0d99ff;
+    --accent-dim: rgba(13,153,255,0.15);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.15);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.12);
+    --text: #e2e8f0;
+    --muted: rgba(255,255,255,0.38);
+    --border: rgba(255,255,255,0.08);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  header {
+    padding: 10px 12px 9px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 13px; font-weight: 600; }
+  .header-icon {
+    width: 20px; height: 20px;
+    background: linear-gradient(135deg, var(--accent), #7c4dff);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+
+  /* ── Preview section ── */
+  .preview-section {
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* State: nothing selected */
+  .state-empty {
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .state-empty .icon { font-size: 28px; margin-bottom: 8px; }
+
+  /* State: selected but no link */
+  .state-no-link {
+    padding: 12px 14px;
+    display: none;
+  }
+  .selection-row {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+  }
+  .node-type-badge {
+    font-size: 9px; font-weight: 600;
+    padding: 2px 5px; border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .node-name {
+    flex: 1; font-size: 11px; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .no-link-hint {
+    font-size: 10px; color: var(--muted);
+    margin-top: 7px; padding-left: 2px;
+  }
+
+  /* State: linked with preview */
+  .state-linked {
+    display: none;
+    flex-direction: column;
+  }
+
+  /* Preview image */
+  .preview-img-wrap {
+    position: relative;
+    background: #0b0b1a;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    min-height: 40px;
+  }
+  .preview-img-wrap img {
+    width: 100%;
+    display: block;
+    max-height: 300px;
+    object-fit: contain;
+  }
+  .preview-overlay {
+    position: absolute; inset: 0;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .preview-img-wrap:hover .preview-overlay {
+    background: rgba(0,0,0,0.38);
+    opacity: 1;
+  }
+  .overlay-btn {
+    background: rgba(255,255,255,0.92);
+    color: #111;
+    border: none; border-radius: 6px;
+    font-size: 11px; font-weight: 600;
+    padding: 7px 14px; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* Preview footer with action buttons */
+  .preview-footer {
+    padding: 8px 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .link-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green); flex-shrink: 0;
+    box-shadow: 0 0 6px var(--green);
+  }
+  .linked-info { flex: 1; overflow: hidden; }
+  .linked-label { font-size: 9px; color: var(--muted); }
+  .linked-name {
+    font-size: 11px; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .action-btn {
+    font-size: 10px; padding: 4px 8px;
+    border-radius: 5px; cursor: pointer;
+    font-weight: 500; white-space: nowrap; flex-shrink: 0;
+    border: 1px solid transparent;
+    transition: filter 0.1s;
+  }
+  .action-btn:hover { filter: brightness(1.2); }
+  .btn-jump {
+    background: var(--accent-dim); color: var(--accent);
+    border-color: rgba(13,153,255,0.25);
+  }
+  .btn-stamp {
+    background: var(--amber-dim); color: var(--amber);
+    border-color: rgba(251,191,36,0.25);
+  }
+  .btn-unlink {
+    background: var(--red-dim); color: var(--red);
+    border-color: rgba(248,113,113,0.2);
+  }
+
+  /* ── Frame list section ── */
+  .list-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .list-header {
+    padding: 8px 12px 6px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .list-title {
+    font-size: 10px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .search-wrap { position: relative; }
+  .search-icon {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 11px; pointer-events: none;
+  }
+  #search {
+    width: 100%; padding: 6px 8px 6px 26px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text); font-size: 11px;
+    outline: none; transition: border-color 0.15s;
+  }
+  #search:focus { border-color: rgba(13,153,255,0.5); }
+  #search::placeholder { color: var(--muted); }
+
+  .frame-scroll {
+    flex: 1; overflow-y: auto; padding: 6px 10px 8px;
+  }
+  .frame-scroll::-webkit-scrollbar { width: 3px; }
+  .frame-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.12); border-radius: 3px;
+  }
+  .frame-item {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 8px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    margin-bottom: 4px;
+    transition: border-color 0.12s;
+  }
+  .frame-item:hover { border-color: rgba(255,255,255,0.18); }
+  .frame-item.is-linked {
+    border-color: rgba(34,197,94,0.4);
+    background: rgba(34,197,94,0.06);
+  }
+  .frame-thumb-placeholder {
+    width: 32px; height: 22px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; color: var(--muted);
+  }
+  .frame-name {
+    flex: 1; font-size: 11px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .linked-chip {
+    font-size: 9px; padding: 1px 5px; border-radius: 4px;
+    background: var(--green-dim); color: var(--green);
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .link-btn {
+    font-size: 10px; padding: 3px 8px;
+    background: var(--accent-dim); color: var(--accent);
+    border: 1px solid rgba(13,153,255,0.25);
+    border-radius: 5px; cursor: pointer; font-weight: 500;
+    white-space: nowrap; flex-shrink: 0;
+    transition: filter 0.1s;
+  }
+  .link-btn:hover { filter: brightness(1.2); }
+  .link-btn:disabled { opacity: 0.35; cursor: not-allowed; filter: none; }
+
+  .empty-msg {
+    color: var(--muted); font-size: 11px;
+    text-align: center; padding: 24px 0; line-height: 1.6;
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-bar {
+    padding: 7px 10px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .count-label { flex: 1; font-size: 10px; color: var(--muted); }
+  .scan-btn {
+    font-size: 10px; padding: 4px 10px;
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px; cursor: pointer;
+    transition: background 0.1s;
+  }
+  .scan-btn:hover { background: rgba(255,255,255,0.07); }
+
+  /* Stamp hint tooltip */
+  .stamp-hint {
+    font-size: 10px; color: var(--muted);
+    padding: 0 10px 7px;
+    line-height: 1.5;
+    display: none;
+  }
+  .stamp-hint.visible { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-icon">🔗</div>
+  <h1>Design Linker</h1>
+</header>
+
+<!-- Preview / Selection section -->
+<div class="preview-section" id="preview-section">
+
+  <!-- Nothing selected -->
+  <div class="state-empty" id="state-empty">
+    <div class="icon">👆</div>
+    オブジェクトを選択すると<br>リンク先のプレビューが表示されます
+  </div>
+
+  <!-- Selected but no link -->
+  <div class="state-no-link" id="state-no-link">
+    <div class="selection-row">
+      <span class="node-type-badge" id="node-type-badge">FRAME</span>
+      <span class="node-name" id="node-name-no-link">-</span>
+    </div>
+    <div class="no-link-hint">↓ 下のリストからフレームを選んで「リンク」を押してください</div>
+  </div>
+
+  <!-- Linked with preview -->
+  <div class="state-linked" id="state-linked">
+    <div class="preview-img-wrap" id="preview-img-wrap">
+      <img id="preview-img" src="" alt="preview">
+      <div class="preview-overlay">
+        <button class="overlay-btn" id="overlay-jump-btn">デザインへ移動 ↗</button>
+      </div>
+    </div>
+    <div class="preview-footer">
+      <div class="link-dot"></div>
+      <div class="linked-info">
+        <div class="linked-label">リンク先</div>
+        <div class="linked-name" id="linked-name">-</div>
+      </div>
+      <button class="action-btn btn-jump" id="jump-btn">移動 ↗</button>
+      <button class="action-btn btn-stamp" id="stamp-btn" title="プレビューカードをカンバスに貼り付け（プラグインを閉じても残ります）">📌 貼付</button>
+      <button class="action-btn btn-unlink" id="unlink-btn">解除</button>
+    </div>
+    <div class="stamp-hint" id="stamp-hint">📌 <b>貼付</b>：プレビューカードをカンバスに生成します。プラグインを閉じても消えません。</div>
+  </div>
+
+</div>
+
+<!-- Frame list -->
+<div class="list-section">
+  <div class="list-header">
+    <div class="list-title">リンク先フレームを選択</div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search" placeholder="フレームを検索...">
+    </div>
+  </div>
+  <div class="frame-scroll" id="frame-list">
+    <div class="empty-msg">スキャン中...</div>
+  </div>
+</div>
+
+<!-- Bottom bar -->
+<div class="bottom-bar">
+  <span class="count-label" id="count-label">-</span>
+  <button class="scan-btn" id="scan-btn">再スキャン</button>
+</div>
+
+<script>
+let frames = [];
+let currentLinkedId = null;
+let hasSelection = false;
+let stampHintShown = false;
+
+function post(msg) {
+  parent.postMessage({ pluginMessage: msg }, '*');
+}
+
+function showState(name) {
+  document.getElementById('state-empty').style.display = name === 'empty' ? '' : 'none';
+  document.getElementById('state-no-link').style.display = name === 'no-link' ? 'block' : 'none';
+  document.getElementById('state-linked').style.display = name === 'linked' ? 'flex' : 'none';
+}
+
+function bytesToBase64(bytes) {
+  let binary = '';
+  const chunk = 8192;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.slice(i, i + chunk));
+  }
+  return btoa(binary);
+}
+
+window.onmessage = (event) => {
+  const msg = event.data.pluginMessage;
+  if (!msg) return;
+
+  if (msg.type === 'scan-result') {
+    frames = msg.frames || [];
+    document.getElementById('count-label').textContent = frames.length + ' フレーム';
+    renderFrameList();
+  }
+
+  if (msg.type === 'selection-update') {
+    hasSelection = !!msg.nodeName;
+    currentLinkedId = msg.linkedId || null;
+
+    if (!hasSelection) {
+      showState('empty');
+    } else if (!currentLinkedId) {
+      showState('no-link');
+      document.getElementById('node-type-badge').textContent =
+        (msg.nodeType || 'NODE').toUpperCase().slice(0, 10);
+      document.getElementById('node-name-no-link').textContent = msg.nodeName || '-';
+      document.getElementById('node-name-no-link').title = msg.nodeName || '';
+    } else {
+      showState('linked');
+      document.getElementById('linked-name').textContent = msg.linkedName || msg.linkedId;
+      document.getElementById('linked-name').title = msg.linkedName || msg.linkedId;
+
+      if (msg.previewBytes && msg.previewBytes.length) {
+        const b64 = bytesToBase64(msg.previewBytes);
+        document.getElementById('preview-img').src = 'data:image/png;base64,' + b64;
+      } else {
+        document.getElementById('preview-img').src = '';
+      }
+
+      // Show stamp hint on first link
+      if (!stampHintShown) {
+        document.getElementById('stamp-hint').classList.add('visible');
+        stampHintShown = true;
+        setTimeout(() => {
+          document.getElementById('stamp-hint').classList.remove('visible');
+        }, 5000);
+      }
+    }
+    renderFrameList();
+  }
+};
+
+function renderFrameList() {
+  const query = document.getElementById('search').value.toLowerCase();
+  const el = document.getElementById('frame-list');
+  const filtered = frames.filter(f => f.name.toLowerCase().includes(query));
+
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty-msg">' +
+      (frames.length === 0
+        ? 'フレームが見つかりません<br><small style="color:rgba(255,255,255,0.2)">Figmaページにフレームを追加してください</small>'
+        : '検索結果がありません') +
+      '</div>';
+    return;
+  }
+
+  el.innerHTML = '';
+  filtered.forEach(f => {
+    const isLinked = currentLinkedId === f.id;
+    const div = document.createElement('div');
+    div.className = 'frame-item' + (isLinked ? ' is-linked' : '');
+
+    const thumb = document.createElement('div');
+    thumb.className = 'frame-thumb-placeholder';
+    thumb.textContent = '▣';
+    div.appendChild(thumb);
+
+    const name = document.createElement('span');
+    name.className = 'frame-name';
+    name.textContent = f.name;
+    name.title = f.name;
+    div.appendChild(name);
+
+    if (isLinked) {
+      const chip = document.createElement('span');
+      chip.className = 'linked-chip';
+      chip.textContent = '✓ リンク中';
+      div.appendChild(chip);
+    }
+
+    const btn = document.createElement('button');
+    btn.className = 'link-btn';
+    btn.textContent = isLinked ? 'リンク中' : 'リンク';
+    btn.disabled = isLinked || !hasSelection;
+    btn.title = !hasSelection ? 'オブジェクトを選択してください' : '';
+    btn.addEventListener('click', () => post({ type: 'link', targetId: f.id }));
+    div.appendChild(btn);
+
+    el.appendChild(div);
+  });
+}
+
+document.getElementById('unlink-btn').addEventListener('click', () => {
+  post({ type: 'unlink' });
+});
+
+document.getElementById('jump-btn').addEventListener('click', () => {
+  if (currentLinkedId) post({ type: 'jump', nodeId: currentLinkedId });
+});
+
+document.getElementById('overlay-jump-btn').addEventListener('click', () => {
+  if (currentLinkedId) post({ type: 'jump', nodeId: currentLinkedId });
+});
+
+document.getElementById('stamp-btn').addEventListener('click', () => {
+  if (currentLinkedId) post({ type: 'stamp', linkedId: currentLinkedId });
+});
+
+document.getElementById('scan-btn').addEventListener('click', () => post({ type: 'scan' }));
+document.getElementById('search').addEventListener('input', renderFrameList);
+
+post({ type: 'scan' });
+</script>
+</body>
+</html>
