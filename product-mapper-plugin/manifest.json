@@ -1,6 +1,6 @@
 {
-  "name": "Interactive Product Mapper",
-  "id": "product-mapper-plugin",
+  "name": "Product Mapper Pro",
+  "id": "product-mapper-pro",
   "api": "1.0.0",
   "main": "code.js",
   "capabilities": [],
