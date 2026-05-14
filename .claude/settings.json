@@ -4,5 +4,18 @@
       "Bash(gh repo *)",
       "Bash(git --version)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CHANGED=$(git -C /Users/0fr125021/mysite status --short 2>/dev/null | awk '{print $2}' | grep -E '^(js/components\\.js|css/main\\.css)') && [ -n \"$CHANGED\" ] && echo '{\"systemMessage\": \"🔄 コンポーネントファイルが変更されています。Notion同期: Notionを更新して / Figma同期: Figmaを更新して\"}' || true",
+            "statusMessage": "コンポーネント変更を確認中..."
+          }
+        ]
+      }
+    ]
   }
 }
