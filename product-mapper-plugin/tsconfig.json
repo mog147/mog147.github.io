@@ -3,7 +3,7 @@
     "target": "es2017",
     "lib": ["es2017"],
     "module": "es6",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "types": ["@figma/plugin-typings"],
     "strict": true,
     "outDir": "./dist",
