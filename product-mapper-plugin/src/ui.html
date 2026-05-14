@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #0d99ff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preview-container {
+            flex: 1;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        #preview-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.2s ease;
+        }
+
+        .placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        button.secondary {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .info {
+            margin-top: 12px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        #screen-name {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1L1 4.5V11.5L8 15L15 11.5V4.5L8 1Z" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        Product Mapper
+    </h2>
+
+    <div class="preview-container" id="container">
+        <div class="placeholder" id="placeholder">
+            デザインまたはマップノードを選択してください
+        </div>
+        <img id="preview-img" style="display: none;">
+    </div>
+
+    <div id="info-panel" style="display: none; margin-bottom: 12px;">
+        <div id="screen-name"></div>
+    </div>
+
+    <div class="controls">
+        <button id="add-btn">マップに追加</button>
+        <button id="jump-btn" class="secondary">デザインへ移動</button>
+    </div>
+
+    <div class="info">
+        紐づけ情報を保持したノードを生成します
+    </div>
+
+    <script>
+        const img = document.getElementById('preview-img');
+        const placeholder = document.getElementById('placeholder');
+        const screenName = document.getElementById('screen-name');
+        const infoPanel = document.getElementById('info-panel');
+        let currentOriginId = null;
+
+        window.onmessage = (event) => {
+            const msg = event.data.pluginMessage;
+
+            if (msg.type === 'preview-bytes') {
+                const blob = new Blob([msg.bytes], { type: 'image/png' });
+                const url = URL.createObjectURL(blob);
+                
+                img.src = url;
+                img.style.display = 'block';
+                placeholder.style.display = 'none';
+                
+                screenName.innerText = msg.name;
+                infoPanel.style.display = 'block';
+                currentOriginId = msg.id;
+            }
+        };
+
+        document.getElementById('add-btn').onclick = () => {
+            parent.postMessage({ pluginMessage: { type: 'add-to-map' } }, '*');
+        };
+
+        document.getElementById('jump-btn').onclick = () => {
+            if (currentOriginId) {
+                parent.postMessage({ pluginMessage: { type: 'jump-to-design', originId: currentOriginId } }, '*');
+            }
+        };
+    </script>
+</body>
+</html>

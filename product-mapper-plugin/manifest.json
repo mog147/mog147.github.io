@@ -1,0 +1,13 @@
+{
+  "name": "Interactive Product Mapper",
+  "id": "product-mapper-plugin",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": ["figma"],
+  "ui": "src/ui.html",
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  }
+}
