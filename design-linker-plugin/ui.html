@@ -290,6 +290,32 @@
     display: none;
   }
   .stamp-hint.visible { display: block; }
+
+  /* Auto-link bar */
+  .auto-link-bar {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 6px;
+    flex-shrink: 0;
+  }
+  .auto-link-desc { flex: 1; font-size: 10px; color: var(--muted); line-height: 1.4; }
+  .auto-link-btn {
+    font-size: 10px; padding: 4px 10px;
+    background: rgba(124,77,255,0.18); color: #b39dff;
+    border: 1px solid rgba(124,77,255,0.3);
+    border-radius: 6px; cursor: pointer; font-weight: 600;
+    white-space: nowrap; flex-shrink: 0;
+    transition: filter 0.1s;
+  }
+  .auto-link-btn:hover { filter: brightness(1.2); }
+  .auto-link-btn:disabled { opacity: 0.4; cursor: not-allowed; filter: none; }
+  .auto-link-result {
+    font-size: 10px; padding: 4px 10px 5px;
+    border-radius: 5px; display: none; flex-shrink: 0;
+    white-space: nowrap; font-weight: 500;
+  }
+  .auto-link-result.success { background: rgba(34,197,94,0.14); color: #22c55e; }
+  .auto-link-result.warn    { background: rgba(251,191,36,0.12); color: #fbbf24; }
 </style>
 </head>
 <body>
@@ -339,6 +365,13 @@
     <div class="stamp-hint" id="stamp-hint">📌 <b>貼付</b>：プレビューカードをカンバスに生成します。プラグインを閉じても消えません。</div>
   </div>
 
+</div>
+
+<!-- Auto-link bar -->
+<div class="auto-link-bar">
+  <div class="auto-link-desc">名前が一致するフレームに<br>自動でリンクします</div>
+  <span class="auto-link-result" id="auto-link-result"></span>
+  <button class="auto-link-btn" id="auto-link-btn">✨ 自動リンク</button>
 </div>
 
 <!-- Frame list -->
@@ -431,6 +464,22 @@ window.onmessage = (event) => {
     }
     renderFrameList();
   }
+
+  if (msg.type === 'auto-link-done') {
+    const el = document.getElementById('auto-link-result');
+    const btn = document.getElementById('auto-link-btn');
+    btn.disabled = false;
+    btn.textContent = '✨ 自動リンク';
+    if (msg.linked > 0) {
+      el.textContent = `${msg.linked}件リンク済`;
+      el.className = 'auto-link-result success';
+    } else {
+      el.textContent = '一致なし';
+      el.className = 'auto-link-result warn';
+    }
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
 };
 
 function renderFrameList() {
@@ -501,6 +550,13 @@ document.getElementById('stamp-btn').addEventListener('click', () => {
 
 document.getElementById('scan-btn').addEventListener('click', () => post({ type: 'scan' }));
 document.getElementById('search').addEventListener('input', renderFrameList);
+
+document.getElementById('auto-link-btn').addEventListener('click', () => {
+  const btn = document.getElementById('auto-link-btn');
+  btn.disabled = true;
+  btn.textContent = '処理中...';
+  post({ type: 'auto-link', overwrite: false });
+});
 
 post({ type: 'scan' });
 </script>

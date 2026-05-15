@@ -229,6 +229,55 @@ figma.ui.onmessage = async (msg) => {
     await stampToCanvas(msg.linkedId as string);
     return;
   }
+
+  if (msg.type === "auto-link") {
+    const frames = scanFrames();
+    // name (小文字・トリム) → frame のマップ（重複時は先勝ち）
+    const nameMap = new Map<string, { id: string; name: string }>();
+    for (const f of frames) {
+      const key = f.name.toLowerCase().trim();
+      if (!nameMap.has(key)) nameMap.set(key, f);
+    }
+
+    // 選択中があればそれだけ、なければページ全体
+    const sel = figma.currentPage.selection;
+    const targets: SceneNode[] =
+      sel.length > 0
+        ? [...sel]
+        : (figma.currentPage.findAll() as SceneNode[]);
+
+    let linked = 0;
+    let skipped = 0;
+
+    for (const node of targets) {
+      const key = node.name.toLowerCase().trim();
+      const match = nameMap.get(key);
+      if (!match || match.id === node.id) continue;
+
+      const existing = node.getPluginData(LINK_KEY);
+      if (existing && !(msg.overwrite as boolean)) {
+        skipped++;
+        continue;
+      }
+      node.setPluginData(LINK_KEY, match.id);
+      linked++;
+    }
+
+    if (linked > 0) {
+      figma.notify(
+        `${linked}件を自動リンクしました ✓` +
+        (skipped > 0 ? `（リンク済み${skipped}件はスキップ）` : "")
+      );
+    } else if (skipped > 0) {
+      figma.notify(`すべてリンク済みのためスキップしました（${skipped}件）`);
+    } else {
+      figma.notify("名前が一致するフレームが見つかりませんでした");
+    }
+
+    figma.ui.postMessage({ type: "auto-link-done", linked, skipped });
+    await pushSelectionUpdate();
+    return;
+  }
 };
 
 (async () => {
