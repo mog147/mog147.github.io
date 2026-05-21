@@ -1,0 +1,5 @@
+{
+  "framework": null,
+  "buildCommand": "node build.js && mkdir -p public && cp -r index.html about.html contact.html gallery.html news.html works.html success.html 404.html sitemap.xml robots.txt css js img blog public/ && (cp bts-schedule.ics public/ 2>/dev/null || true)",
+  "outputDirectory": "public"
+}
