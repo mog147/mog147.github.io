@@ -302,6 +302,15 @@ section {
     text-transform: uppercase;
 }
 
+.hero-catchcopy-sub {
+    display: block;
+    font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+    letter-spacing: 0.15em;
+    text-transform: none;
+    margin-top: 0.6rem;
+    opacity: 0.75;
+}
+
 .hero-cta {
     margin-top: 2.5rem;
 }
