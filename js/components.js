@@ -271,11 +271,12 @@ class InfoTable extends HTMLElement {
           : item.text;
 
         const badge = item.isNew ? '<span class="badge-new">NEW</span>' : '';
+        const role = item.role ? `<span class="info-table-role">${item.role}</span>` : '';
 
         rowsHtml += `
           <tr>
             <th>${item.date}</th>
-            <td>${badge}${content}</td>
+            <td>${badge}${content}${role}</td>
           </tr>
         `;
       });

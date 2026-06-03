@@ -308,6 +308,15 @@ section {
     text-transform: uppercase;
 }
 
+.hero-catchcopy-sub {
+    display: block;
+    font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+    letter-spacing: 0.15em;
+    text-transform: none;
+    margin-top: 0.6rem;
+    opacity: 0.75;
+}
+
 .hero-cta {
     margin-top: 2.5rem;
 }
@@ -3578,5 +3587,96 @@ pre code {
 
 [data-theme="dark"] .work-note {
     background: rgba(110, 140, 171, 0.12);
+}
+
+/* --- Info Table Role Subtitle --- */
+.info-table-role {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--color-text-sub);
+    line-height: 1.6;
+    margin-top: 0.35rem;
+}
+
+/* --- Skill Layer Grid (6 Competency Layers) --- */
+.skill-layer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skill-layer-card {
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 1.5rem 1.6rem;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.skill-layer-card:hover {
+    border-color: var(--color-indigo);
+    transform: translateY(-3px);
+}
+
+.skill-layer-card--primary {
+    grid-column: 1 / -1;
+    border-color: rgba(110, 140, 171, 0.35);
+    background: rgba(110, 140, 171, 0.04);
+}
+
+.skill-layer-card__num {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--color-indigo);
+    margin-bottom: 0.5rem;
+}
+
+.skill-layer-card__title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+    margin-bottom: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.skill-layer-card__title i {
+    color: var(--color-indigo);
+    font-size: 0.9rem;
+}
+
+.skill-layer-card--primary .skill-layer-card__title {
+    font-size: 1rem;
+}
+
+.skill-layer-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.skill-layer-card__tag {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--color-text-sub);
+    background: rgba(110, 140, 171, 0.07);
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+}
+
+.skill-layer-card--primary .skill-layer-card__tag {
+    background: rgba(110, 140, 171, 0.12);
+    color: var(--color-indigo);
+}
+
+[data-theme="dark"] .skill-layer-card {
+    background: transparent;
+}
+
+[data-theme="dark"] .skill-layer-card--primary {
+    background: rgba(110, 140, 171, 0.07);
 }
 
