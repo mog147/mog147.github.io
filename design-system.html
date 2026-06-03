@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLHXZS4T3C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-BLHXZS4T3C');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>DESIGN SYSTEM | 396 FOLIO</title>
+    <meta name="description" content="396 FOLIO (Tezuka Momoko's Portfolio) Design System. A premium showcase of minimalist engineering and visual aesthetics using CSS3 and Vanilla Web Components.">
+    <link rel="icon" href="img/profile/profile_avatar.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" media="print" onload="this.media='all'" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/design-system.css">
+    <script src="js/config_v2.js"></script>
+    <script src="js/components.js" defer></script>
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <site-header></site-header>
+
+    <main class="ds-container" id="main-content" style="padding-top: 120px;">
+        <!-- Header -->
+        <div class="ds-header reveal">
+            <h1>Design System</h1>
+            <p>396 FOLIO — 美学とエンジニアリングの調和を設計するシステム</p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <nav class="ds-nav reveal" aria-label="Design System Navigation">
+            <a href="#colors">Colors</a>
+            <a href="#typography">Typography</a>
+            <a href="#components">Components</a>
+            <a href="#spacing">Spacing</a>
+            <a href="#animations">Animations</a>
+        </nav>
+
+        <!-- Section: Colors -->
+        <section id="colors" class="ds-section">
+            <h2 class="ds-section__title">Colors</h2>
+            <p class="ds-section__desc">
+                本ポートフォリオは、知性と洗練さを表すインディゴブルー（#6E8CAB）をコアカラーとし、ライトモードとダークモードそれぞれにおいて最適なコントラストと調和を維持するように設計されています。カラーカードをクリックすると、対応する CSS 変数をクリップボードにコピーできます。
+            </p>
+            <div class="ds-color-grid">
+                <!-- Indigo Core -->
+                <div class="ds-color-card" data-copy="var(--color-indigo)">
+                    <div class="ds-color-swatch" style="background-color: #6E8CAB;"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Indigo (Core)</div>
+                        <div class="ds-color-var">--color-indigo</div>
+                        <div class="ds-color-val">#6E8CAB</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Indigo Dark -->
+                <div class="ds-color-card" data-copy="var(--color-indigo-dark)">
+                    <div class="ds-color-swatch" style="background-color: #5A7A99;"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Indigo Dark</div>
+                        <div class="ds-color-var">--color-indigo-dark</div>
+                        <div class="ds-color-val">#5A7A99</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Gradient Main -->
+                <div class="ds-color-card" data-copy="var(--grad-main)">
+                    <div class="ds-color-swatch" style="background: linear-gradient(135deg, #6E8CAB 0%, #8DAEC7 100%);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Unified Gradient</div>
+                        <div class="ds-color-var">--grad-main</div>
+                        <div class="ds-color-val">#6E8CAB 〜 #8DAEC7</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Text Main -->
+                <div class="ds-color-card" data-copy="var(--color-text-main)">
+                    <div class="ds-color-swatch" style="background-color: var(--color-text-main); border-bottom: 1px solid var(--color-border);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Text Main</div>
+                        <div class="ds-color-var">--color-text-main</div>
+                        <div class="ds-color-val">#1D1D1F / #E2E8F0</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Text Sub -->
+                <div class="ds-color-card" data-copy="var(--color-text-sub)">
+                    <div class="ds-color-swatch" style="background-color: var(--color-text-sub);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Text Sub</div>
+                        <div class="ds-color-var">--color-text-sub</div>
+                        <div class="ds-color-val">#6E6E73 / #94A3B8</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Background -->
+                <div class="ds-color-card" data-copy="var(--color-bg)">
+                    <div class="ds-color-swatch" style="background-color: var(--color-bg); border-bottom: 1px solid var(--color-border);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Background</div>
+                        <div class="ds-color-var">--color-bg</div>
+                        <div class="ds-color-val">#F9FAFC / #0B0E14</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Surface -->
+                <div class="ds-color-card" data-copy="var(--color-surface)">
+                    <div class="ds-color-swatch" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Surface</div>
+                        <div class="ds-color-var">--color-surface</div>
+                        <div class="ds-color-val">#FFFFFF / #1A1F2B</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+
+                <!-- Glass BG -->
+                <div class="ds-color-card" data-copy="var(--glass-bg)">
+                    <div class="ds-color-swatch" style="background-color: var(--glass-bg); border-bottom: 1px solid var(--color-border);"></div>
+                    <div class="ds-color-info">
+                        <div class="ds-color-name">Glass BG</div>
+                        <div class="ds-color-var">--glass-bg</div>
+                        <div class="ds-color-val">rgba(...) (Glassmorphism)</div>
+                    </div>
+                    <div class="ds-color-copy-hint">変数をコピー</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Typography -->
+        <section id="typography" class="ds-section">
+            <h2 class="ds-section__title">Typography</h2>
+            <p class="ds-section__desc">
+                タイポグラフィは視覚的ヒエラルキーを形成する重要な骨格です。見出しには幾何学的かつエレガントな「Outfit」、本文には可読性とモダンさを両立する「Inter」を採用しています。
+            </p>
+            <div class="glass-card ds-typo-list">
+                <!-- Family -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Font Families
+                    </div>
+                    <div class="ds-typo-preview">
+                        <p style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 300; margin-bottom: 0.5rem;">Outfit (Heading Family)</p>
+                        <p style="font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.8;">Inter (Body Family) - 美しい可読性と調和</p>
+                        <div class="ds-typo-meta">Outfit: Headings / Inter: Body and Metadata</div>
+                    </div>
+                </div>
+
+                <!-- Hero Title -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Hero Title (H1)
+                        <div class="ds-typo-meta">clamp(2.5rem, 12vw, 8rem)</div>
+                    </div>
+                    <div class="ds-typo-preview">
+                        <span style="font-family: 'Outfit', sans-serif; font-size: clamp(2.2rem, 6vw, 4.5rem); font-weight: 100; letter-spacing: 0.3em; text-transform: uppercase;">396 FOLIO</span>
+                    </div>
+                </div>
+
+                <!-- Section Title (H2) -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Section Title (H2)
+                        <div class="ds-typo-meta">2.2rem / Letter spacing: 0.12em</div>
+                    </div>
+                    <div class="ds-typo-preview">
+                        <span style="font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.12em;">- WORKS -</span>
+                    </div>
+                </div>
+
+                <!-- Component Title (H3) -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Component Title (H3)
+                        <div class="ds-typo-meta">1.6rem</div>
+                    </div>
+                    <div class="ds-typo-preview">
+                        <span style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 300;">Visual Design & Logic Integration</span>
+                    </div>
+                </div>
+
+                <!-- Body (p) -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Body Text (P)
+                        <div class="ds-typo-meta">1rem / Line height: 1.8</div>
+                    </div>
+                    <div class="ds-typo-preview">
+                        <p style="font-size: 1rem; line-height: 1.8; color: var(--color-text-main);">
+                            本サイトは、モダンなデザインエンジニアリングの粋を集めて構築された静的ウェブサイトです。フレームワークなしで実現する軽量で極めてスムーズな動作と、審美的なインタラクションの統合を実証しています。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sub Title -->
+                <div class="ds-typo-item">
+                    <div class="ds-typo-label">
+                        Subtitle (.sub-title)
+                        <div class="ds-typo-meta">0.75rem / Letter spacing: 0.2em</div>
+                    </div>
+                    <div class="ds-typo-preview">
+                        <span class="sub-title">Design Engineering / Workflow Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Components -->
+        <section id="components" class="ds-section">
+            <h2 class="ds-section__title">Components</h2>
+            <p class="ds-section__desc">
+                お嬢様が実装されたカスタム Web Components (Vanilla Web Components) です。再利用性と保守性を最大化し、かつ軽量な動作を実現しています。以下にプレビューとコードスニペットを表示します。
+            </p>
+
+            <!-- Card: Glass Card -->
+            <div style="margin-bottom: 5rem;">
+                <h3 style="margin-bottom: 1rem;">1. Glass Card (&lt;glass-card&gt;)</h3>
+                <p class="ds-section__desc" style="margin-bottom: 2rem;">
+                    美麗なグラスモーフィズムデザインを表現するコンポーネントです。適度なブラー（blur(25px)）とソフトなシャドウを内包します。
+                </p>
+                <div class="ds-component-demo">
+                    <glass-card reveal style="width: 100%; max-width: 600px;">
+                        <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; margin-bottom: 1rem; color: var(--color-text-main);">Premium Glassmorphism</h4>
+                        <p style="font-size: 0.95rem; color: var(--color-text-sub);">
+                            極めて美しいガラス調のサーフェスです。ライトモード、ダークモード双方において、背景と完璧に融和します。
+                        </p>
+                    </glass-card>
+                </div>
+                <div class="ds-code-wrap">
+                    <button class="ds-code-copy-btn" aria-label="Copy Code">COPY</button>
+                    <pre><code><span class="tag">&lt;glass-card</span> <span class="attr">reveal</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;h4&gt;</span>Premium Glassmorphism<span class="tag">&lt;/h4&gt;</span>
+  <span class="tag">&lt;p&gt;</span>美しいガラス調のサーフェスです。<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/glass-card&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <!-- Card: Site Button -->
+            <div style="margin-bottom: 5rem;">
+                <h3 style="margin-bottom: 1rem;">2. Interactive Button (&lt;site-button&gt;)</h3>
+                <p class="ds-section__desc" style="margin-bottom: 2rem;">
+                    ユーザーのアクションを誘導するボタンコンポーネント。CTA型（背景丸がホバーで伸びる）とMore型（矢印付きのミニマル）の2タイプがあります。
+                </p>
+                <div class="ds-component-demo" style="gap: 3rem; flex-wrap: wrap;">
+                    <div>
+                        <span class="sub-title" style="margin-bottom: 1rem; text-align: center;">CTA Type</span>
+                        <site-button href="#components" type="cta">Contact Me</site-button>
+                    </div>
+                    <div>
+                        <span class="sub-title" style="margin-bottom: 1rem; text-align: center;">More Type</span>
+                        <site-button href="#components" type="more">Read Works</site-button>
+                    </div>
+                </div>
+                <div class="ds-code-wrap">
+                    <button class="ds-code-copy-btn" aria-label="Copy Code">COPY</button>
+                    <pre><code><span class="txt">&lt;!-- CTA Type --&gt;</span>
+<span class="tag">&lt;site-button</span> <span class="attr">href</span>=<span class="val">"contact.html"</span> <span class="attr">type</span>=<span class="val">"cta"</span><span class="tag">&gt;</span>Contact Me<span class="tag">&lt;/site-button&gt;</span>
+
+<span class="txt">&lt;!-- More Type --&gt;</span>
+<span class="tag">&lt;site-button</span> <span class="attr">href</span>=<span class="val">"works.html"</span> <span class="attr">type</span>=<span class="val">"more"</span><span class="tag">&gt;</span>Read Works<span class="tag">&lt;/site-button&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <!-- Card: Section Title -->
+            <div style="margin-bottom: 5rem;">
+                <h3 style="margin-bottom: 1rem;">3. Section Title (&lt;section-title&gt;)</h3>
+                <p class="ds-section__desc" style="margin-bottom: 2rem;">
+                    セクションの見出しを統一されたフォーマット（大文字＋前後のハイフン）でレンダリングします。`center` 属性で中央揃えにでき、`reveal` 属性でスクロール表示に対応します。
+                </p>
+                <div class="ds-component-demo" style="flex-direction: column; align-items: stretch;">
+                    <section-title title="GALLERY" center></section-title>
+                </div>
+                <div class="ds-code-wrap">
+                    <button class="ds-code-copy-btn" aria-label="Copy Code">COPY</button>
+                    <pre><code><span class="tag">&lt;section-title</span> <span class="attr">title</span>=<span class="val">"GALLERY"</span> <span class="attr">center</span> <span class="attr">reveal</span><span class="tag">&gt;&lt;/section-title&gt;</span></code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Spacing -->
+        <section id="spacing" class="ds-section">
+            <h2 class="ds-section__title">Spacing & Layout</h2>
+            <p class="ds-section__desc">
+                レイアウトは「密と疎」の美しいリズムを形成するために、厳密なスペーシングルールに沿って定義されています。コンテンツ幅やセクションの上下マージンは統一されたCSS変数によって管理されます。
+            </p>
+            <div class="glass-card ds-spacing-visualizer">
+                <!-- Max Width -->
+                <div class="ds-space-row">
+                    <div class="ds-space-label">--max-width</div>
+                    <div class="ds-space-bar-container">
+                        <div class="ds-space-bar" style="width: 100%;"></div>
+                    </div>
+                    <div class="ds-space-val">1000px</div>
+                </div>
+
+                <!-- Section Top -->
+                <div class="ds-space-row">
+                    <div class="ds-space-label">--sp-section-top</div>
+                    <div class="ds-space-bar-container">
+                        <div class="ds-space-bar" style="width: 80px;"></div>
+                    </div>
+                    <div class="ds-space-val">8rem (128px)</div>
+                </div>
+
+                <!-- Section Bottom -->
+                <div class="ds-space-row">
+                    <div class="ds-space-label">--sp-section-bottom</div>
+                    <div class="ds-space-bar-container">
+                        <div class="ds-space-bar" style="width: 60px;"></div>
+                    </div>
+                    <div class="ds-space-val">6rem (96px)</div>
+                </div>
+
+                <!-- Card Padding -->
+                <div class="ds-space-row">
+                    <div class="ds-space-label">--sp-card-p</div>
+                    <div class="ds-space-bar-container">
+                        <div class="ds-space-bar" style="width: 40px;"></div>
+                    </div>
+                    <div class="ds-space-val">3.5rem 2.5rem</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Animations -->
+        <section id="animations" class="ds-section">
+            <h2 class="ds-section__title">Animations & Transitions</h2>
+            <p class="ds-section__desc">
+                極上のユーザー体験を提供するため、静的でありながらダイナミックに動く「マイクロインタラクション」を随所に散りばめています。イージングは、よりオーガニックに減速する Apple スタイル（cubic-bezier）を採用しています。
+            </p>
+            <div class="ds-color-grid">
+                <!-- Smooth Transition -->
+                <div class="glass-card flex-center" style="padding: 2.5rem; text-align: center;">
+                    <div class="ds-space-label" style="margin-bottom: 1rem;">Smooth Transition</div>
+                    <p style="font-size: 0.85rem; color: var(--color-text-sub); margin-bottom: 2rem;">0.6s var(--ease-out-cubic)</p>
+                    <div class="avatar-wrap" style="margin-bottom: 0; width: 6rem; height: 6rem;">
+                        <img src="img/profile/profile_avatar.png" alt="Demo Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <span style="font-size: 0.75rem; color: var(--color-indigo); margin-top: 1.5rem;">ホバーで拡大縮小</span>
+                </div>
+
+                <!-- Bounce Transition -->
+                <div class="glass-card flex-center" style="padding: 2.5rem; text-align: center;">
+                    <div class="ds-space-label" style="margin-bottom: 1rem;">Cubic-Bezier Bounce</div>
+                    <p style="font-size: 0.85rem; color: var(--color-text-sub); margin-bottom: 2rem;">0.8s var(--ease-out-back)</p>
+                    <div style="font-size: 2.5rem; color: var(--color-indigo); animation: jumpOnce 2s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; will-change: transform;">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span style="font-size: 0.75rem; color: var(--color-indigo); margin-top: 1.5rem;">オーガニックな弾み</span>
+                </div>
+
+                <!-- Reveal effect -->
+                <div class="glass-card flex-center" style="padding: 2.5rem; text-align: center;">
+                    <div class="ds-space-label" style="margin-bottom: 1rem;">Scroll Reveal</div>
+                    <p style="font-size: 0.85rem; color: var(--color-text-sub); margin-bottom: 2rem;">Intersection Observer</p>
+                    <button class="btn-more btn-more--plain" id="replay-reveal" style="margin: 0;">
+                        <i class="fa-solid fa-arrow-rotate-right"></i> アニメーション再生
+                    </button>
+                    <span style="font-size: 0.75rem; color: var(--color-indigo); margin-top: 1.5rem;">スクロール進入で浮き上がり</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="ds-toast" class="ds-toast" role="alert">
+        <i class="fa-solid fa-check"></i>
+        <span id="ds-toast-msg">Copied to clipboard!</span>
+    </div>
+
+    <site-footer></site-footer>
+
+    <!-- Design System Interactive Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toast = document.getElementById('ds-toast');
+            const toastMsg = document.getElementById('ds-toast-msg');
+
+            const showToast = (message) => {
+                toastMsg.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            };
+
+            // Color Clipboard Copy
+            const colorCards = document.querySelectorAll('.ds-color-card');
+            colorCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const valueToCopy = card.getAttribute('data-copy');
+                    navigator.clipboard.writeText(valueToCopy)
+                        .then(() => {
+                            showToast(`Copied CSS Variable: ${valueToCopy}`);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy', err);
+                        });
+                });
+            });
+
+            // Code Snippet Clipboard Copy
+            const copyButtons = document.querySelectorAll('.ds-code-copy-btn');
+            copyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const codeBlock = btn.nextElementSibling.querySelector('code');
+                    // Remove span tags to copy plain text
+                    const plainText = codeBlock.textContent;
+                    navigator.clipboard.writeText(plainText)
+                        .then(() => {
+                            showToast('HTML Code Snippet copied!');
+                            btn.textContent = 'COPIED!';
+                            setTimeout(() => {
+                                btn.textContent = 'COPY';
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy code snippet', err);
+                        });
+                });
+            });
+
+            // Replay Reveal Animation
+            const replayBtn = document.getElementById('replay-reveal');
+            if (replayBtn) {
+                replayBtn.addEventListener('click', () => {
+                    const reveals = document.querySelectorAll('.reveal');
+                    reveals.forEach(el => {
+                        el.classList.remove('active');
+                        // Trigger reflow
+                        void el.offsetWidth;
+                        el.classList.add('active');
+                    });
+                    showToast('Revealed animations replayed!');
+                });
+            }
+
+            // Quick Nav Active State on scroll
+            const sections = document.querySelectorAll('.ds-section');
+            const navLinks = document.querySelectorAll('.ds-nav a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= (sectionTop - 250)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            }, { passive: true });
+        });
+    </script>
+</body>
+
+</html>

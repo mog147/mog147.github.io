@@ -3,34 +3,40 @@
 /* ----------------------------------------- */
 
 :root {
-    /* Core Colors */
+    /* --- Brand Identity --- */
     --color-indigo: #6E8CAB;
     --color-indigo-dark: #5A7A99;
+    --color-accent: var(--color-indigo);
+
+    /* --- Neutral Palette --- */
     --color-bg: #F9FAFC;
     --color-surface: #FFFFFF;
     --color-text-main: #1D1D1F;
     --color-text-sub: #6E6E73;
-    --color-accent: var(--color-indigo);
     --color-border: rgba(0, 0, 0, 0.03);
 
-    /* Unified Gradient */
+    /* --- Visual Effects (Glassmorphism & Gradients) --- */
     --grad-main: linear-gradient(135deg, #6E8CAB 0%, #8DAEC7 100%);
-
-    /* Unified Glassmorphism */
     --glass-bg: rgba(255, 255, 255, 0.65);
     --glass-border: rgba(255, 255, 255, 0.4);
     --glass-blur: blur(25px);
     --glass-shadow: 0 10px 40px rgba(70, 100, 130, 0.05);
 
-    /* Header & Lightbox */
+    /* --- Contextual Overlays --- */
     --header-bg: rgba(255, 255, 255, 0.92);
     --lightbox-bg: rgba(255, 255, 255, 0.95);
 
-    /* Spacing Grid (Compact & Airy) */
+    /* --- Layout & Spacing Grid --- */
+    --max-width: 1000px;
     --sp-section-top: 8rem;
     --sp-section-bottom: 6rem;
     --sp-card-p: 3.5rem 2.5rem;
-    --max-width: 1000px;
+
+    /* --- Transition & Animation --- */
+    --ease-out-cubic: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --transition-smooth: 0.6s var(--ease-out-cubic);
+    --transition-fast: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* --- Dark Mode Configuration --- */

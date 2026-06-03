@@ -29,6 +29,7 @@ class SiteHeader extends HTMLElement {
               <li><a href="${base}index.html#WORKS">WORKS</a></li>
               <li><a href="${base}news.html">NEWS</a></li>
               <li><a href="${base}about.html">ABOUT</a></li>
+              <li><a href="${base}design-system.html">DESIGN SYSTEM</a></li>
               <li><a href="https://muuu-noir.github.io/formaldehyde/" target="_blank" rel="noopener">GALLERY</a></li>
               <li><a href="${base}contact.html">CONTACT</a></li>
             </ul>

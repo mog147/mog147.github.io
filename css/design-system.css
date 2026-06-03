@@ -1,0 +1,345 @@
+/* ----------------------------------------- */
+/* 396 FOLIO - Design System / Styleguide CSS */
+/* ----------------------------------------- */
+
+/* Design System Layout */
+.ds-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.ds-header {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.ds-header h1 {
+    font-family: "Outfit", sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 100;
+    letter-spacing: 0.15em;
+    color: var(--color-text-main);
+    text-transform: uppercase;
+}
+
+.ds-header p {
+    color: var(--color-text-sub);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+}
+
+.ds-section {
+    margin-bottom: 8rem;
+}
+
+.ds-section__title {
+    font-family: "Outfit", sans-serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-main);
+    text-transform: uppercase;
+}
+
+.ds-section__desc {
+    color: var(--color-text-sub);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+/* Color Swatches Grid */
+.ds-color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.ds-color-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    position: relative;
+}
+
+.ds-color-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.ds-color-swatch {
+    height: 120px;
+    width: 100%;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.ds-color-card:hover .ds-color-swatch {
+    opacity: 0.95;
+}
+
+.ds-color-info {
+    padding: 1.2rem;
+}
+
+.ds-color-name {
+    font-family: "Outfit", sans-serif;
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--color-text-main);
+    margin-bottom: 0.3rem;
+}
+
+.ds-color-var {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.75rem;
+    color: var(--color-indigo);
+    margin-bottom: 0.3rem;
+}
+
+.ds-color-val {
+    font-size: 0.8rem;
+    color: var(--color-text-sub);
+}
+
+.ds-color-copy-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-family: "Outfit", sans-serif;
+    opacity: 0;
+    transition: var(--transition-fast);
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+}
+
+.ds-color-card:hover .ds-color-copy-hint {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Typography Preview */
+.ds-typo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.ds-typo-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+@media (max-width: 768px) {
+    .ds-typo-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+.ds-typo-label {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.85rem;
+    color: var(--color-indigo);
+    text-transform: uppercase;
+}
+
+.ds-typo-meta {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.75rem;
+    color: var(--color-text-sub);
+    margin-top: 0.5rem;
+}
+
+.ds-typo-preview {
+    color: var(--color-text-main);
+}
+
+/* Interactive Component Showcase */
+.ds-component-demo {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: var(--glass-shadow);
+}
+
+.ds-component-demo.dark-bg {
+    background: #0B0E14;
+}
+
+.ds-code-wrap {
+    position: relative;
+    background: #1E1E24;
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+:root[data-theme="dark"] .ds-code-wrap {
+    background: #0D0E12;
+    border: 1px solid var(--color-border);
+}
+
+.ds-code-wrap pre {
+    margin: 0;
+}
+
+.ds-code-wrap code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.85rem;
+    color: #F8F8F2;
+    line-height: 1.5;
+}
+
+/* Specific styling for Code Highlight tokens */
+.ds-code-wrap .tag { color: #FF79C6; }
+.ds-code-wrap .attr { color: #50FA7B; }
+.ds-code-wrap .val { color: #F1FA8C; }
+.ds-code-wrap .txt { color: #F8F8F2; }
+
+.ds-code-copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.ds-code-copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+/* Toast Notification */
+.ds-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--grad-main);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border-radius: 30px;
+    font-family: "Outfit", sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    box-shadow: 0 10px 30px rgba(110, 140, 171, 0.3);
+    z-index: 10000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ds-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Navigation layout inside design system */
+.ds-nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 5rem;
+    flex-wrap: wrap;
+}
+
+.ds-nav a {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: var(--color-text-sub);
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    transition: var(--transition-fast);
+}
+
+.ds-nav a:hover, .ds-nav a.active {
+    border-color: var(--color-indigo);
+    color: var(--color-indigo);
+    background: rgba(110, 140, 171, 0.05);
+}
+
+/* Spacing Visualizer */
+.ds-spacing-visualizer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.ds-space-row {
+    display: grid;
+    grid-template-columns: 150px 1fr 100px;
+    align-items: center;
+    gap: 2rem;
+}
+
+@media (max-width: 600px) {
+    .ds-space-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}
+
+.ds-space-label {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.85rem;
+    color: var(--color-indigo);
+}
+
+.ds-space-bar-container {
+    background: var(--color-border);
+    height: 24px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ds-space-bar {
+    background: var(--grad-main);
+    height: 100%;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.ds-space-val {
+    font-family: "Outfit", sans-serif;
+    font-size: 0.85rem;
+    color: var(--color-text-sub);
+    text-align: right;
+}
